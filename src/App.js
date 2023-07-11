@@ -9,6 +9,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  Navigate
 } from "react-router-dom";
 
 
@@ -18,7 +19,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      auth: 0
+      auth: false
     }
   }
 
@@ -36,8 +37,8 @@ class App extends Component {
       <Navbar login={this.authHandler.bind(this)} status={this.state.auth}/>
       <Routes>
         <Route path="/about" element={ <About/>}/>
-        <Route path="/posts" element={ <Home/>}/>
-        <Route path="/" element={<Header title="Blogger"/>}/>
+        <Route path="/posts" element={ this.state.auth === false ? <Navigate to="/"/> : <Home/>}/>
+        <Route path="/" element={ <Header title="Blogger"/>}/>
         <Route path="*" element={ <div className="text-center p-5"><h1>404 Page Not Found.</h1></div> }/>
       </Routes>
       <Footer/>
